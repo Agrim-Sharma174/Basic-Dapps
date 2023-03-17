@@ -14,12 +14,12 @@ contract todo {
     }
 
     function getTodoLength() public view returns(uint256 ) {
-        uint256 lengthOFTodo = todo.length();
+        uint256 lengthOFTodo = todo.length;
         return lengthOFTodo;
     }
 
     function deleteTodo(uint256 _index) public {
-        require(_index < todo.length(), "The index doesn't exist");
+        require(_index < todo.length, "The index doesn't exist");
         todo[_index] = todo[todo.length() - 1];
         todo.pop();
     }
