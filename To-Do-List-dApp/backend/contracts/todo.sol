@@ -20,7 +20,7 @@ contract todo {
 
     function deleteTodo(uint256 _index) public {
         require(_index < todo.length, "The index doesn't exist");
-        todo[_index] = todo[todo.length() - 1];
+        todo[_index] = todo[todo.length - 1];
         todo.pop();
     }
 
