@@ -1,7 +1,7 @@
 const {ethers} = require("hardhat");
 
 async function main() {
-  const toDoContract = await ethers.getContractFactory("ToDos");
+  const toDoContract = await ethers.getContractFactory("todo");
 
   const deployedToDoContract = await toDoContract.deploy();
 
