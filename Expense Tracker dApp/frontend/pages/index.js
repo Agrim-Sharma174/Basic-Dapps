@@ -10,6 +10,10 @@ const inter = Inter({ subsets: ["latin"] });
               
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+  {darkMode ? document.body.classList.add("dark") : document.body.classList.remove("dark")}
   return (
     <div className="darkMode && 'dark'">
       <Head>
@@ -40,7 +44,7 @@ export default function Home() {
       </section> */}
 
       <section className="w-screen h-screen flex flex-col justify-center items-center ">
-        <div className="toggle ">
+        <div onClick={toggleDarkMode} className="toggle ">
           <img src="https://img.icons8.com/dusk/64/undefined/smiling-sun.png" alt="" />
         </div>
         <div className=""></div>
