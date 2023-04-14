@@ -12,4 +12,25 @@ contract Vending_Machine {
         donutBalance[address(this)] = 100;
     }
 
+    function getDonutBalance() view public returns (uint) {
+        return donutBalance[address(this)];
+    }
+
+    function getOwnedBalance(address user) view external returns(uint) {
+        return donutBalance[user];
+    }
+
+    //This function will allow the owner to add more donuts to the machine
+    function reStock(uint _amount) public {
+        require(msg.sender == owner, "Only owner can can restock");
+        donutBalance[address(this)] += _amount;
+    }
+
+    function purchase(uint _amount) public payable {
+        require(msg.value >= _amount* 0.001 ether,"You don't have enough ether to purchase this amount of donuts");
+        require(donutBalance[address(this)] >= _amount, "Not enough donuts in stock");
+        donutBalance[address(this)] -= _amount;
+        donutBalance[msg.sender] += _amount;
+    }
+
 }
