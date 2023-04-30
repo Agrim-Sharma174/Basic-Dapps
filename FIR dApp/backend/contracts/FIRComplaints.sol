@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-contract Complaint {
+contract FIRComplaints {
     address public officer;
     address public owner;
     uint256 public ComplaintId;
 
     uint256[] public pendingApprovals;
-    uint256[] public pendingCase;
+    uint256[] public pendingResolution;
     uint256[] public resolvedCases;
 
     constructor(address _officer) {
@@ -17,19 +17,14 @@ contract Complaint {
     }
 
     modifier onlyOwner() {
-        require(
-            msg.sender == owner,
-            "You are not the owner"
-        );
+        require(msg.sender == owner, "You are not the owner");
 
         _;
     }
 
     modifier onlyOfficer() {
-        require(
-            msg.sender == officer,
-            "You are not the officer"
-        );
+        require(msg.sender == officer, "You are not the officer");
+
         _;
     }
 
@@ -51,13 +46,13 @@ contract Complaint {
 
     function fileComplaint(
         string memory _title,
-        string memory description
+        string memory _description
     ) public {
         complaint storage newComplaint = Complaints[ComplaintId];
         newComplaint.id = ComplaintId;
         newComplaint.complainant = msg.sender;
         newComplaint.title = _title;
-        newComplaint.description = description;
+        newComplaint.description = _description;
         newComplaint.approvalRemarks = "Pending Approval";
         newComplaint.resolutionRemark = "Pending Resolution";
         newComplaint.isApproved = false;
@@ -74,11 +69,28 @@ contract Complaint {
     ) public onlyOfficer {
         require(Complaints[_id].exists == true, "Complaint does not exist");
         require(
-            Complained[_id].isApproved == false,
+            Complaints[_id].isApproved == false,
             "Complaint has already been approved"
         );
+        Complaints[_id].isApproved = true;
         Complaints[_id].approvalRemarks = _approvalRemark;
     }
+
+    // function declineComplaint(
+    //     uint256 _id,
+    //     string memory _approvalRemark
+    // ) public onlyOfficer {
+    //     require(Complaints[_id].exists == true, "Complaint does not exist");
+    //     require(
+    //         Complaints[_id].isApproved == false,
+    //         "Complaint has already been approved"
+    //     );
+    //     Complaints[_id].exists = false;
+    //     Complaints[_id].approvalRemarks = string.concat(
+    //         "This complaint is rejected. Reason: ",
+    //         _approvalRemark
+    //     );
+    // }
 
     function declineComplaint(
         uint256 _id,
@@ -90,9 +102,11 @@ contract Complaint {
             "Complaint has already been approved"
         );
         Complaints[_id].exists = false;
-        Complaint[_id].approvalRemarks = string.concat(
-            "This complaint is rejected. Reason: ",
-            _approvalRemark
+        Complaints[_id].approvalRemarks = string(
+            abi.encodePacked(
+                "This complaint is rejected. Reason: ",
+                _approvalRemark
+            )
         );
     }
 
@@ -126,19 +140,19 @@ contract Complaint {
     }
 
     function calcuPendingResolutionIds() public {
-        delete pendingCase;
+        delete pendingResolution;
         for (uint256 i = 1; i < ComplaintId; i++) {
             if (
                 Complaints[i].isResolved == false &&
                 Complaints[i].isApproved == true &&
                 Complaints[i].exists == true
             ) {
-                pendingCase.push(Complaints[i].id);
+                pendingResolution.push(Complaints[i].id);
             }
         }
     }
 
-    function calcuResolvedIds() public {
+    function calcResolvedIds() public {
         delete resolvedCases;
         for (uint256 i = 1; i < ComplaintId; i++) {
             if (Complaints[i].isResolved == true) {
@@ -147,7 +161,7 @@ contract Complaint {
         }
     }
 
-    function setOfficerAddress(addres _officer) public onlyOwner {
+    function setOfficerAddress(address _officer) public onlyOwner {
         owner = _officer;
     }
 }
