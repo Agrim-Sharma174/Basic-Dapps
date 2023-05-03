@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
+import Web3Modal from "web3modal";
 
 const inter = Inter({ subsets: ["latin"] });
 
