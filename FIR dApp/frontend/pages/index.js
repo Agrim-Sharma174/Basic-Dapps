@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Web3Modal from "web3modal";
+import Complaint from "@/components/Complaint";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,14 +64,20 @@ export default function Home() {
       <div>
         <div className="flex justify-between m-5 items-center">
           <div className="hidden lg:block"> logo </div>
-          <div className="text-3xl font-semibold ml-5">FIR PORTAL</div>
+          <div className="md:text-3xl font-semibold lg:ml-10">FIR PORTAL</div>
           <div>
-            <button className="bg-red-500 w-40 h-10 rounded-lg hover:bg-red-600">
+            <button className="bg-red-500 w-32 md:w-40 h-10 rounded-lg hover:bg-red-600">
               Connect Wallet!
             </button>
           </div>
         </div>
       </div>
+
+
+      {/* Complaint */}
+      <Complaint />
+
+
     </>
   );
 }
