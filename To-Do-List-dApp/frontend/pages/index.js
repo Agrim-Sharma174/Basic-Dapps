@@ -1,18 +1,21 @@
-import Head from "next/head";
-import { Inter } from "next/font/google";
-import { useEffect, useRef, useState } from "react";
-import Web3Modal from "web3modal";
 
-const inter = Inter({ subsets: ["latin"] });
+import React, { useEffect, useRef, useState } from "react";
+import Web3Modal from "web3modal";
+import { providers, Contract } from "ethers";
+import Header from "./Components/Header";
+import List from "./Components/List";
+import { TODO_CONTRACT_ADDRESS, TO_DO_CONTRACT_ABI } from '../constants/index';
 
 export default function Home() {
   const Web3ModalRef = useRef();
   const [darkMode, setDarkMode] = useState(false);
   const [walletConnected, setWalletConnected] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [todoList, setTodoList] = useState([]);
 
   useEffect(() => {
-    if (!WalletConnected) {
-      web3Modal.current = new Web3Modal({
+    if (!walletConnected) {
+      Web3ModalRef.current = new Web3Modal({
         network: "sepolia",
         providerOptions: {},
         disableInjectedProvider: false,
@@ -48,12 +51,12 @@ export default function Home() {
   const getProviderOrSigner = async (needSigner = false) => {
     // Connect to Metamask
     // Since we store `web3Modal` as a reference, we need to access the `current` value to get access to the underlying object
-    const provider = await web3ModalRef.current.connect();
+    const provider = await Web3ModalRef.current.connect();
     const web3Provider = new providers.Web3Provider(provider);
 
     // If user is not connected to the Sepolia network, let them know and throw an error
     const { chainId } = await web3Provider.getNetwork();
-    if (chainId !== 0x46807c0) {
+    if (chainId !== 11155111) {
       window.alert("Change the network to Sepolia");
       throw new Error("Change network to Sepolia");
     }
@@ -124,7 +127,7 @@ export default function Home() {
   return (
     <>
       <main className={darkMode && "dark"}>
-        <div className="dark:bg-[#10172a] min-h-screen">
+        <div className="dark:bg-[#10172a] bg-slate-400 min-h-screen">
           <Header
             darkMode={darkMode}
             setDarkMode={setDarkMode}
