@@ -16,7 +16,7 @@ const List = ({todo, deleteTodos, idx}) => {
 
   return (
     <div className=" my-4 flex flex-col justify-between items-center mt-7">
-      <p className=" py-5 text-white bg-gray-900 dark:bg-gray-600 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-50  md:text-2xl  sm:text-xl rounded px-3 sm: w-10/12 flex  justify-between pb-3 " >
+      <p className=" py-5 text-white bg-[#060d38] dark:bg-gray-600 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-50  md:text-2xl  sm:text-xl rounded px-3 sm: w-10/12 flex  justify-between pb-3 " >
         {todo}
         <div className="flex items-center">
           <TiDeleteOutline
