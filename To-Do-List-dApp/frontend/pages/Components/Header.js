@@ -1,31 +1,28 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from "react";
 import { MdDarkMode } from "react-icons/md";
 import { MdOutlineLightMode } from "react-icons/md";
 
-const Header = ({darkMode, setDarkMode, getTodos, setTodo}) => {
+const Header = ({ darkMode, setDarkMode, getTodos, setTodo }) => {
+  const inputRef = useRef();
+  const [inputText, setInputText] = useState("");
 
-    const inputRef = useRef();
-    const [inputText, setInputText] = useState("");
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
 
-    const toggleDarkMode = () => {
-        setDarkMode((prevMode) => !prevMode);
-    }
+  const handleChange = (e) => {
+    setInputText(e.target.value);
+  };
 
-    const handleChange = (e) => {
-        setInputText(e.target.value);
-    };
-
-    const handleTodos = () => {
-        setTodo(inputText);
-        inputRef.current.value = "";
-    }
+  const handleTodos = () => {
+    setTodo(inputText);
+    inputRef.current.value = "";
+  };
 
   return (
     <main>
       <nav className="flex justify-around items-center pb-3 dark:bg-[#028b19] bg-gray-900 mb-5 pt-5">
-        <h1 className="text-center text-white text-2xl m-0">
-          To Do dApp
-        </h1>
+        <h1 className="text-center text-white text-2xl m-0">To Do dApp</h1>
         {darkMode ? (
           <MdDarkMode
             className="text-white text-4xl cursor-pointer "
@@ -63,7 +60,7 @@ const Header = ({darkMode, setDarkMode, getTodos, setTodo}) => {
         </div>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
