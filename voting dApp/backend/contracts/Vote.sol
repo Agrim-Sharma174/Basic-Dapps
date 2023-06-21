@@ -25,4 +25,11 @@ contract Vote {
         voter = msg.sender;
         addressesArray.push(voter); 
     }
+
+    function getAddressesArray() public view returns(address[] memory) {
+        return addressesArray;
+    }
+    function getAddressesArrayLength() public view returns(uint) {
+        return addressesArray.length;
+    }
 }
