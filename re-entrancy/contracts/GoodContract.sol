@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 
 contract GoodContract {
     mapping(address => uint256) public balances;
@@ -9,7 +9,7 @@ contract GoodContract {
         balances[msg.sender] += msg.value;
     }
 
-    // Send ETH worth `balances[msg.sender]` back to msg.sender
+    // Send ETH worth `balances[msg.sender]` back to msg.sender 
     function withdraw() public {
         // Must have >0 ETH deposited
         require(balances[msg.sender] > 0);
