@@ -1,4 +1,4 @@
-//SPDX-License-Provider:MIT
+// SPDX-License-Provider:MIT
 pragma solidity ^0.8.19;
 
 import "./Game.sol";
